@@ -7,59 +7,66 @@ namespace lab4
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Введите цифру, соответствующую выбранной стране: (1-Россия, 2-Китай, 3-Германия)\n");
-            string country = Console.ReadLine()?.ToLower();
-            RegionProperty prop;
-            switch (country)
+            Console.WriteLine("Выберите страну: (ru-Россия, ch-Китай, ge-Германия)\n");
+            bool check = Enum.TryParse(Console.ReadLine(), out Countries.listOfCountries country);
+
+            if (!check)
             {
-
-                case "2":
-                    prop = new ChinaProperty();
-                    break;
-                case "3":
-                    prop = new GermanyProperty();
-                    break;
-                default:
-                    prop = new RussiaProperty();
-                    break;
+                Console.WriteLine("Данная страна не поддерживается");
             }
-            App app = new App(
-                prop.CurrencyCreate(),
-                prop.DateFormatCreate(),
-                prop.FirstDayOfWeekCreate(),
-                prop.DomainCreate(),
-                prop.LanguageCreate(),
-                prop.PhoneCodeCreate(),
-                prop.StandardLengthCreate(),
-                prop.StandardVolumeCreate(),
-                prop.StandardWeightCreator(),
-                prop.TimeZoneCreate());
+            else
+            {
+                RegionProperty prop;
+                switch (country.ToString())
+                {
 
-            Console.WriteLine("Валюта: {0}\n" +
-                              "Формат даты: {1}\n" +
-                              "Первый день недели: {2}\n" +
-                              "Домен: {3}\n" +
-                              "Язык: {4}\n" +
-                              "Телефонный код: {5}\n" +
-                              "Стандартная единица длины: {6}\n" +
-                              "Стандартная единица объём: {7}\n" +
-                              "Стандартная единица массы: {8}\n" +
-                              "Часовой пояс: {9}\n",
-                app.currency.getCurrency(),
-                app.dateFormat.getDateFormat(),
-                app.firstDayOfWeek.getFirstDayOfWeek(),
-                app.domain.getDomain(),
-                app.language.getLanguage(),
-                app.phoneCode.getPhoneCode(),
-                app.standardLength.getStandardLength(),
-                app.standardVolume.getStandardVolume(),
-                app.standardWeight.getStandardWeight(),
-                app.timeZone.getTimeZone());
+                    case "ch":
+                        prop = new ChinaProperty();
+                        break;
+                    case "ge":
+                        prop = new GermanyProperty();
+                        break;
+                    default:
+                        prop = new RussiaProperty();
+                        break;
+                }
+                App app = new App(
+                    prop.CurrencyCreate(),
+                    prop.DateFormatCreate(),
+                    prop.FirstDayOfWeekCreate(),
+                    prop.DomainCreate(),
+                    prop.LanguageCreate(),
+                    prop.PhoneCodeCreate(),
+                    prop.StandardLengthCreate(),
+                    prop.StandardVolumeCreate(),
+                    prop.StandardWeightCreator(),
+                    prop.TimeZoneCreate());
+
+                Console.WriteLine("Валюта: {0}\n" +
+                                  "Формат даты: {1}\n" +
+                                  "Первый день недели: {2}\n" +
+                                  "Домен: {3}\n" +
+                                  "Язык: {4}\n" +
+                                  "Телефонный код: {5}\n" +
+                                  "Стандартная единица длины: {6}\n" +
+                                  "Стандартная единица объём: {7}\n" +
+                                  "Стандартная единица массы: {8}\n" +
+                                  "Часовой пояс: {9}\n",
+                    app.currency.getCurrency(),
+                    app.dateFormat.getDateFormat(),
+                    app.firstDayOfWeek.getFirstDayOfWeek(),
+                    app.domain.getDomain(),
+                    app.language.getLanguage(),
+                    app.phoneCode.getPhoneCode(),
+                    app.standardLength.getStandardLength(),
+                    app.standardVolume.getStandardVolume(),
+                    app.standardWeight.getStandardWeight(),
+                    app.timeZone.getTimeZone());
+            }
         }
-    }
-    /// <summary>
-    /// создание класса App
-    /// </summary>
+        /// <summary>
+        /// создание класса App
+        /// </summary>
         class App
         {
             public CurrencyProp currency;
@@ -92,4 +99,11 @@ namespace lab4
                 this.timeZone = timeZone;
             }
         }
+    }
+
+        public class Countries
+        {
+            public enum listOfCountries { ru, ge, ch };
+        }
+    
 }
